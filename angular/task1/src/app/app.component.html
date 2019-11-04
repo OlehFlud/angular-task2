@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+<button (click)="search()">Button</button>
+<input type="text" (input)="onInput($event)">
+
+{{content}}
+
+
+  <!--Show all info-->
+
+    <div *ngFor="let house of houses"
+         [style.backgroundColor]=" house.owner.is_blocked ? 'red':'green' ">
+      <button (click)="ShowAllBtn(house.id)">ShowAllInfo</button>
+      <br>
+      id {{house.id}}
+      <div *ngIf="index === house.id">
+        city {{house.owner.name}}
+        <br>
+        price: {{house.price}}
+        <br>
+        square: {{house.street}}
+      </div>
+    </div>
+
+<!-- Registration form-->
+<form #registrationForm = "ngForm"  (ngSubmit)="registrationUser()">
+  <input type="text" name="name" placeholder="Введіть ім’я"
+   #nameInput="ngModel" [(ngModel)]="newUsers.name"
+   [ngStyle]="{backgroundColor: nameInput.invalid && nameInput.dirty ? 'red' : 'green'}"
+  required>
+
+
+
+  <input type="email" name="email" placeholder="Введіть email"
+  #emailInput="ngModel"  [(ngModel)]="newUsers.email"
+  [ngStyle]="{backgroundColor: emailInput.invalid && emailInput.dirty ? 'red' : 'green'}"
+  required>
+
+  <input type="password" name="password" placeholder="Введіть пароль"
+  #passwordInput ="ngModel" [(ngModel)]="newUsers.password"
+  [ngStyle]="{backgroundColor: passwordInput.invalid && passwordInput.dirty ? 'red' : 'green'}"
+  required>
+  <button>REGISTER</button>
+</form>
+
+
+<!--Login Form-->
+
+<form #loginForm = "ngForm"  (ngSubmit)="loginUser()">
+  <input type="text" name="email" placeholder="Введіть email"
+         #emailInput="ngModel" [(ngModel)]="findUser.email">
+
+  <input type="text" name="password" placeholder="Введіть пароль"
+         #passwordInput="ngModel" [(ngModel)]="findUser.password">
+
+  <button>Login</button>
+</form>
+
+<!--Create House Form-->
+
+<form #createHouseForm = "ngForm"  (ngSubmit)="createHouse()">
+  <input type="number" name="price" ngModel
+  #priceInput="ngModel" [(ngModel)]="house.price"
+  [ngStyle]="{backgroundColor: priceInput.invalid && priceInput.dirty ? 'red' : 'green'}"
+  required>
+
+  <input type="text" name="street" ngModel
+  #streetInput="ngModel" [(ngModel)]="house.street"
+  [ngStyle]="{backgroundColor: streetInput.invalid && streetInput.dirty ? 'red' : 'green'}"
+  required>
+
+  <button>Create</button>
+</form>
+
+</body>
+</html>
